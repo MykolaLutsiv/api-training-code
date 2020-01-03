@@ -36,6 +36,7 @@ public class UsersTest {
         RestAssured.baseURI = config.baseUrl();
     }
 
+
     @Test
     public void  testCanRegisterNewUser() {
         // given
@@ -48,6 +49,25 @@ public class UsersTest {
         userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
                 .shouldHave(bodyField("id", not(isEmptyString())));
+
+    }
+
+    // bY MEEEEEEEEE
+    @Test
+    public void testCanDeleteUser() {
+        // given
+        UserPayload user = new UserPayload()
+                .username(faker.name().username())
+                .email("test@mail.com")
+                .password("test123");
+
+        // expect
+        UserRegistrationResponse response = userApiService.registerUser(user)
+                .shouldHave(statusCode(200))
+                .asPojo(UserRegistrationResponse.class);
+
+        userApiService.deleteUser(response)
+                .shouldHave(statusCode(200));
 
     }
 
