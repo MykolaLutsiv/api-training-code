@@ -1,6 +1,7 @@
 package com.socks.api.assertions;
 
 import com.socks.api.conditions.Condition;
+import io.qameta.allure.Step;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -13,6 +14,7 @@ public class AssertableResponse {
 
     private final Response response;
 
+    @Step("then api response should have {condition}")
     public AssertableResponse shouldHave(Condition condition) {
         log.info("About to check condition {}", condition);
         condition.check(response);
