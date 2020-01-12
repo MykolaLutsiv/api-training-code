@@ -5,9 +5,9 @@ node {
         url: 'https://github.com/MykolaLutsiv/api-training-code.git'
     }
 
-    stage("build"){
-        sh "./gradlew clean api-test:assemble"
-    }
+ //   stage("build"){
+ //       sh "./gradlew clean api-test:assemble"
+ //   }
 
     stage("run api tests"){
         sh "./gradlew api-test:test"
