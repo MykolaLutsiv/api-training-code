@@ -12,7 +12,4 @@ node {
     stage("run api tests"){
         sh "./gradlew api-test:test"
     }
-
-
-
 }
