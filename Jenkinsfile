@@ -1,7 +1,7 @@
 node {
      stage("checkout repo") {
         git branch: 'master',
-        credentialsId: '9c967b5f-aa54-40b7-8072-a42e99e4ba73',
+        credentialsId: 'b456f2c0-35d9-4815-8837-e82deaaf5f15',
         url: 'https://github.com/MykolaLutsiv/api-training-code.git'
     }
 
