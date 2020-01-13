@@ -2,20 +2,14 @@ package com.socks.tests;
 
 import com.github.javafaker.Faker;
 import com.socks.api.ProjectConfig;
-import com.socks.api.conditions.Condition;
-import com.socks.api.conditions.Conditions;
-import com.socks.api.conditions.StatusCodeCondition;
+
 import com.socks.api.payloads.UserPayload;
 import com.socks.api.responses.UserRegistrationResponse;
 import com.socks.api.services.UserApiService;
-import com.sun.javafx.runtime.SystemProperties;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import org.aeonbits.owner.ConfigFactory;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import sun.security.ec.point.ProjectivePoint;
 
 import java.util.Locale;
 
