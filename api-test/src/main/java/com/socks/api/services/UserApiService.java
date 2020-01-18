@@ -15,9 +15,9 @@ public class UserApiService extends ApiService {
                 .post("register"));
     }
 
-    public AssertableResponse deleteUser(UserRegistrationResponse response) {
+    public AssertableResponse deleteUser(UserRegistrationResponse user) {
         return new AssertableResponse(setUp()
                 .when()
-                .delete("customers/" + response.getId()));
+                .delete("customers/" + user.getId()));
     }
 }
