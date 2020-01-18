@@ -18,6 +18,6 @@ node {
         jdk: '',
         properties: [],
         reportBuildPolicy: 'ALWAYS',
-        results: [[path: 'api/build/allure-results']]
+        results: [[path: 'api-test/build/allure-results']]
     ])
 }
