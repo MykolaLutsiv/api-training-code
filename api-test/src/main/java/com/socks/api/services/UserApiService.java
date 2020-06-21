@@ -20,4 +20,16 @@ public class UserApiService extends ApiService {
                 .when()
                 .delete("customers/" + user.getId()));
     }
+
+    public AssertableResponse loggedUser() {
+        return new AssertableResponse(setUp()
+                .when()
+                .get("login"));
+    }
+
+    public AssertableResponse getCards() {
+        return new AssertableResponse(setUp()
+        .when()
+        .get("cards"));
+    }
 }

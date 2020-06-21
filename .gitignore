@@ -2,6 +2,7 @@
 .allure/
 .idea/
 build/
+allure-results/
 out/
 *.ipr
-*.iml
+*.imlgi

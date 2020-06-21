@@ -15,8 +15,8 @@ import java.util.Locale;
 
 import static com.socks.api.conditions.Conditions.bodyField;
 import static com.socks.api.conditions.Conditions.statusCode;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.isEmptyString;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 public class UsersTest {
 
@@ -43,6 +43,23 @@ public class UsersTest {
         userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
                 .shouldHave(bodyField("id", not(isEmptyString())));
+
+    }
+
+    @Test
+    public void  testLoggedUser() {
+        // given
+        UserPayload user = new UserPayload()
+                .username(faker.name().username())
+                .email("test@mail.com")
+                .password("test123");
+
+        // expect
+        userApiService.registerUser(user)
+                .shouldHave(statusCode(200))
+                .shouldHave(bodyField("id", not(isEmptyString())));
+        userApiService.loggedUser()
+                .shouldHave(statusCode(200));
 
     }
 
@@ -79,7 +96,6 @@ public class UsersTest {
                 .shouldHave(statusCode(200))
                 .asPojo(UserRegistrationResponse.class);
         response.getId();
-
     }
 
     @Test
@@ -98,6 +114,14 @@ public class UsersTest {
         userApiService.registerUser(user)
                 .shouldHave(statusCode(500));
 
-
     }
-}
+
+    @Test
+    public void getCards() {
+
+        userApiService.getCards()
+                .shouldHave(statusCode(200));
+     }
+
+     }
+
