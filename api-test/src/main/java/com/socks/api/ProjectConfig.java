@@ -1,14 +1,20 @@
 package com.socks.api;
 
 import org.aeonbits.owner.Config;
+import org.aeonbits.owner.Config.Sources;
 
-@Config.Sources({"classpath:config.properties"})
+@Sources({"classpath:config.properties"})
 public interface ProjectConfig extends Config {
 
-    String baseUrl ();
+    @DefaultValue("stage")
+    String env();
 
-    @DefaultValue("ru")
+    @Key("${env}.baseUrl")
+    String baseUrl();
+
+    @Key("${env}.locale")
     String locale();
 
+    @Key("${env}.logging")
     boolean logging();
 }

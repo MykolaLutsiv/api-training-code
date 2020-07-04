@@ -7,7 +7,10 @@ import com.socks.api.payloads.UserPayload;
 import com.socks.api.responses.UserRegistrationResponse;
 import com.socks.api.services.UserApiService;
 import io.restassured.RestAssured;
+import io.restassured.filter.session.SessionFilter;
+import io.restassured.http.ContentType;
 import org.aeonbits.owner.ConfigFactory;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -15,7 +18,6 @@ import java.util.Locale;
 
 import static com.socks.api.conditions.Conditions.bodyField;
 import static com.socks.api.conditions.Conditions.statusCode;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 public class UsersTest {
@@ -42,28 +44,41 @@ public class UsersTest {
         // expect
         userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
-                .shouldHave(bodyField("id", not(isEmptyString())));
+                .shouldHave(bodyField("id", not(isEmptyOrNullString())));
 
     }
+
+//    @Test
+//    public void  testLogin() {
+//        // given
+//        UserPayload user = new UserPayload()
+//                .username(faker.name().username())
+//                .email("test@mail.com")
+//                .password("test123");
+//
+//        // expect
+//        UserRegistrationResponse userRespone = userApiService.registerUser(user)
+//                .shouldHave(statusCode(200))
+//                .shouldHave(bodyField("id", not(isEmptyOrNullString())))
+//                .asPojo(UserRegistrationResponse.class);
+//        userApiService.login(user.username(), user.password())
+//                .shouldHave(statusCode(200));
+//        CustomerResponse customerResponse = userApiService.customerById(userRespone.getId())
+//                .asPojo(CustomerResponse.class);
+//        Assert.assertEquals(customerResponse.getUsername(), user.username());
+//
+//
+//    }
 
     @Test
-    public void  testLoggedUser() {
-        // given
-        UserPayload user = new UserPayload()
-                .username(faker.name().username())
-                .email("test@mail.com")
-                .password("test123");
+    public void  testGetOrders() {
 
-        // expect
-        userApiService.registerUser(user)
-                .shouldHave(statusCode(200))
-                .shouldHave(bodyField("id", not(isEmptyString())));
-        userApiService.loggedUser()
-                .shouldHave(statusCode(200));
+        userApiService.getOrders().shouldHave(statusCode(201));
+
 
     }
 
-    // bY MEEEEEEEEE
+    // bY MEEEEEEEE
     @Test
     public void testCanDeleteUser() {
         // given
@@ -77,9 +92,8 @@ public class UsersTest {
                 .shouldHave(statusCode(200))
                 .asPojo(UserRegistrationResponse.class);
 
-        userApiService.deleteUser(response)
+        userApiService.deleteUser(response.getId())
                 .shouldHave(statusCode(200));
-
     }
 
     // SAME TEST AS ABOVE BUT WITH POJO CLASS
@@ -92,10 +106,11 @@ public class UsersTest {
                 .password("test123");
 
         // expect
-        UserRegistrationResponse response = userApiService.registerUser(user)
+        userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
                 .asPojo(UserRegistrationResponse.class);
-        response.getId();
+//        Assert.assertNotNull(response.getId());
+//        response.getId();
     }
 
     @Test
@@ -113,6 +128,7 @@ public class UsersTest {
 
         userApiService.registerUser(user)
                 .shouldHave(statusCode(500));
+//                .shouldHave(bodyField())
 
     }
 
@@ -123,5 +139,5 @@ public class UsersTest {
                 .shouldHave(statusCode(200));
      }
 
-     }
+}
 

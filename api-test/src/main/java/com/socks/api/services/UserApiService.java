@@ -4,6 +4,14 @@ import com.socks.api.assertions.AssertableResponse;
 import com.socks.api.payloads.UserPayload;
 import com.socks.api.responses.UserRegistrationResponse;
 import io.qameta.allure.Step;
+import io.restassured.authentication.FormAuthConfig;
+import io.restassured.config.LogConfig;
+import io.restassured.filter.session.SessionFilter;
+import io.restassured.http.Cookie;
+
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
 
 public class UserApiService extends ApiService {
 
@@ -15,21 +23,45 @@ public class UserApiService extends ApiService {
                 .post("register"));
     }
 
-    public AssertableResponse deleteUser(UserRegistrationResponse user) {
+    @Step
+    public AssertableResponse deleteUser(String id) {
         return new AssertableResponse(setUp()
                 .when()
-                .delete("customers/" + user.getId()));
+                .delete("customers/" + id));
     }
 
-    public AssertableResponse loggedUser() {
+    @Step
+    public Map<String, String> login() {
+        return setUp()
+                .auth()
+                .preemptive()
+                .basic("user", "password")
+                .when()
+                .get("login")
+                .getCookies();
+    }
+
+    @Step
+    public AssertableResponse customerById(String id) {
         return new AssertableResponse(setUp()
                 .when()
-                .get("login"));
+                .get("customers/" + id));
     }
 
+
+
+    @Step
     public AssertableResponse getCards() {
         return new AssertableResponse(setUp()
         .when()
         .get("cards"));
+    }
+
+    @Step
+    public AssertableResponse getOrders() {
+        return new AssertableResponse(setUp()
+                .cookies(login())
+                .when()
+                .get("orders"));
     }
 }

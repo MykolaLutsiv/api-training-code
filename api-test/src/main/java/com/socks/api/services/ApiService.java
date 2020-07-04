@@ -3,6 +3,7 @@ package com.socks.api.services;
 import com.socks.api.ProjectConfig;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.Filter;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -19,7 +20,8 @@ public class ApiService {
 
     protected RequestSpecification setUp() {
         return RestAssured
-                .given().contentType(ContentType.JSON)
+                .given()
+                .contentType(ContentType.JSON)
                 .filters(getFilters());
     }
 
