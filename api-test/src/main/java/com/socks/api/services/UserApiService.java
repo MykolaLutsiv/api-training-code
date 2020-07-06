@@ -1,6 +1,7 @@
 package com.socks.api.services;
 
 import com.socks.api.assertions.AssertableResponse;
+import com.socks.api.payloads.CardPayload;
 import com.socks.api.payloads.UserPayload;
 import com.socks.api.responses.UserRegistrationResponse;
 import io.qameta.allure.Step;
@@ -53,8 +54,24 @@ public class UserApiService extends ApiService {
     @Step
     public AssertableResponse getCards() {
         return new AssertableResponse(setUp()
-        .when()
-        .get("cards"));
+                .when()
+                .get("cards"));
+    }
+
+    @Step
+    public AssertableResponse getCardById(String id) {
+        return new AssertableResponse(setUp()
+                .when()
+                .get("cards/" + id));
+    }
+
+    @Step
+    public AssertableResponse createCard(CardPayload card) {
+        return new AssertableResponse(setUp()
+                .cookies(login())
+                .body(card)
+                .when()
+                .post("cards"));
     }
 
     @Step

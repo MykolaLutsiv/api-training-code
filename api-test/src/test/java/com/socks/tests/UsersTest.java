@@ -3,7 +3,11 @@ package com.socks.tests;
 import com.github.javafaker.Faker;
 import com.socks.api.ProjectConfig;
 
+import com.socks.api.assertions.AssertableResponse;
+import com.socks.api.payloads.CardPayload;
 import com.socks.api.payloads.UserPayload;
+import com.socks.api.responses.CardCreateResponse;
+import com.socks.api.responses.CardResponse;
 import com.socks.api.responses.UserRegistrationResponse;
 import com.socks.api.services.UserApiService;
 import io.restassured.RestAssured;
@@ -32,7 +36,6 @@ public class UsersTest {
         RestAssured.baseURI = config.baseUrl();
     }
 
-
     @Test
     public void  testCanRegisterNewUser() {
         // given
@@ -48,28 +51,6 @@ public class UsersTest {
 
     }
 
-//    @Test
-//    public void  testLogin() {
-//        // given
-//        UserPayload user = new UserPayload()
-//                .username(faker.name().username())
-//                .email("test@mail.com")
-//                .password("test123");
-//
-//        // expect
-//        UserRegistrationResponse userRespone = userApiService.registerUser(user)
-//                .shouldHave(statusCode(200))
-//                .shouldHave(bodyField("id", not(isEmptyOrNullString())))
-//                .asPojo(UserRegistrationResponse.class);
-//        userApiService.login(user.username(), user.password())
-//                .shouldHave(statusCode(200));
-//        CustomerResponse customerResponse = userApiService.customerById(userRespone.getId())
-//                .asPojo(CustomerResponse.class);
-//        Assert.assertEquals(customerResponse.getUsername(), user.username());
-//
-//
-//    }
-
     @Test
     public void  testGetOrders() {
 
@@ -78,7 +59,7 @@ public class UsersTest {
 
     }
 
-    // bY MEEEEEEEE
+
     @Test
     public void testCanDeleteUser() {
         // given
@@ -137,6 +118,21 @@ public class UsersTest {
 
         userApiService.getCards()
                 .shouldHave(statusCode(200));
+     }
+
+     @Test
+    public void createCard() {
+
+         CardPayload card = new CardPayload()
+                 .ccv("12/12")
+                 .expires("2024")
+                 .longNum("0000")
+                 .userID("NoMatter");
+
+         CardResponse cardResponse = userApiService.createCard(card)
+                 .shouldHave(statusCode(200))
+                 .asPojo(CardResponse.class);
+
      }
 
 }
