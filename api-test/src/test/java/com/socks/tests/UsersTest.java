@@ -48,28 +48,6 @@ public class UsersTest {
 
     }
 
-//    @Test
-//    public void  testLogin() {
-//        // given
-//        UserPayload user = new UserPayload()
-//                .username(faker.name().username())
-//                .email("test@mail.com")
-//                .password("test123");
-//
-//        // expect
-//        UserRegistrationResponse userRespone = userApiService.registerUser(user)
-//                .shouldHave(statusCode(200))
-//                .shouldHave(bodyField("id", not(isEmptyOrNullString())))
-//                .asPojo(UserRegistrationResponse.class);
-//        userApiService.login(user.username(), user.password())
-//                .shouldHave(statusCode(200));
-//        CustomerResponse customerResponse = userApiService.customerById(userRespone.getId())
-//                .asPojo(CustomerResponse.class);
-//        Assert.assertEquals(customerResponse.getUsername(), user.username());
-//
-//
-//    }
-
     @Test
     public void  testGetOrders() {
 

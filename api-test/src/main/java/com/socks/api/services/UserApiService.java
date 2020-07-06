@@ -49,7 +49,6 @@ public class UserApiService extends ApiService {
     }
 
 
-
     @Step
     public AssertableResponse getCards() {
         return new AssertableResponse(setUp()

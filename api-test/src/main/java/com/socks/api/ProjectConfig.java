@@ -6,15 +6,10 @@ import org.aeonbits.owner.Config.Sources;
 @Sources({"classpath:config.properties"})
 public interface ProjectConfig extends Config {
 
-    @DefaultValue("stage")
-    String env();
-
-    @Key("${env}.baseUrl")
     String baseUrl();
 
-    @Key("${env}.locale")
+    @DefaultValue("de")
     String locale();
 
-    @Key("${env}.logging")
     boolean logging();
 }
