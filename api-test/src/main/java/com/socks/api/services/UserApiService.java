@@ -35,7 +35,7 @@ public class UserApiService extends ApiService {
         return setUp()
                 .auth()
                 .preemptive()
-                .basic("user", "password")
+                .basic("valentin.lubowitz", "test123")
                 .when()
                 .get("login")
                 .getCookies();
