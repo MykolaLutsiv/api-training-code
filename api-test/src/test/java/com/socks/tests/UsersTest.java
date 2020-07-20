@@ -6,13 +6,16 @@ import com.socks.api.ProjectConfig;
 import com.socks.api.assertions.AssertableResponse;
 import com.socks.api.payloads.CardPayload;
 import com.socks.api.payloads.UserPayload;
+import com.socks.api.responses.CardsResponse.CardItem;
+import com.socks.api.responses.CardsResponse.CardsResponse;
 import com.socks.api.responses.CardCreateResponse;
-import com.socks.api.responses.CardResponse;
+import com.socks.api.responses.DeleteCardResponse;
+import com.socks.api.responses.DeleteCardResponse1;
 import com.socks.api.responses.UserRegistrationResponse;
 import com.socks.api.services.UserApiService;
 import io.restassured.RestAssured;
-import io.restassured.filter.session.SessionFilter;
-import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
 import org.aeonbits.owner.ConfigFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -34,6 +37,7 @@ public class UsersTest {
         ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
         faker = new Faker(new Locale(config.locale()));
         RestAssured.baseURI = config.baseUrl();
+        RestAssured.defaultParser = Parser.JSON;
     }
 
     @Test
@@ -41,22 +45,19 @@ public class UsersTest {
         // given
         UserPayload user = new UserPayload()
                 .username(faker.name().username())
-                .email("test@mail.com")
-                .password("test123");
+                .email(faker.internet().emailAddress())
+                .password(faker.internet().password());
 
         // expect
         userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
-                .shouldHave(bodyField("id", not(isEmptyOrNullString())));
+                .shouldHave(bodyField("id", notNullValue()));
 
     }
 
     @Test
     public void  testGetOrders() {
-
         userApiService.getOrders().shouldHave(statusCode(201));
-
-
     }
 
 
@@ -65,8 +66,8 @@ public class UsersTest {
         // given
         UserPayload user = new UserPayload()
                 .username(faker.name().username())
-                .email("test@mail.com")
-                .password("test123");
+                .email(faker.internet().emailAddress())
+                .password(faker.internet().password());
 
         // expect
         UserRegistrationResponse response = userApiService.registerUser(user)
@@ -83,33 +84,30 @@ public class UsersTest {
         // given
         UserPayload user = new UserPayload()
                 .username(faker.name().username())
-                .email("test@mail.com")
-                .password("test123");
+                .email(faker.internet().emailAddress())
+                .password(faker.internet().password());
 
         // expect
-        userApiService.registerUser(user)
+        UserRegistrationResponse response = userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
                 .asPojo(UserRegistrationResponse.class);
-//        Assert.assertNotNull(response.getId());
-//        response.getId();
+        Assert.assertNotNull(response.getId());
     }
 
     @Test
     public void testCanNotRegisterSameUser() {
-//        UserPayload user = new UserPayload("test123", "test@mail.com",
-//                RandomStringUtils.randomAlphanumeric(6));
+
         UserPayload user = new UserPayload()
                 .username(faker.name().username())
-                .email("test@mail.com")
-                .password("test123");
+                .email(faker.internet().emailAddress())
+                .password(faker.internet().password());
 
         userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
-                .shouldHave(bodyField("id", not(isEmptyString())));
+                .shouldHave(bodyField("id", notNullValue()));
 
         userApiService.registerUser(user)
                 .shouldHave(statusCode(500));
-//                .shouldHave(bodyField())
 
     }
 
@@ -117,23 +115,54 @@ public class UsersTest {
     public void getCards() {
 
         userApiService.getCards()
-                .shouldHave(statusCode(200));
+                .shouldHave(statusCode(200))
+                .asPojo(CardsResponse.class);
      }
+
+    @Test
+    public void createCard() {
+        CardPayload card = new CardPayload()
+                .ccv("11/11")
+                .expires("2024")
+                .longNum("0000123")
+                .userID("NoMatterqwe");
+        CardCreateResponse cardCreateResponse = userApiService.createCard(card)
+                .shouldHave(statusCode(200))
+                .asPojo(CardCreateResponse.class);
+        Assert.assertNotNull(cardCreateResponse.getId());
+    }
 
      @Test
-    public void createCard() {
-
+    public void getCreatedCard() {
          CardPayload card = new CardPayload()
-                 .ccv("12/12")
-                 .expires("2024")
-                 .longNum("0000")
-                 .userID("NoMatter");
+                 .ccv(faker.internet().domainWord())
+                 .expires(faker.date().toString())
+                 .longNum(faker.number().toString())
+                 .userID(faker.internet().uuid());
 
-         CardResponse cardResponse = userApiService.createCard(card)
+         CardCreateResponse cardCreateResponse = userApiService.createCard(card)
                  .shouldHave(statusCode(200))
-                 .asPojo(CardResponse.class);
+                 .asPojo(CardCreateResponse.class);
 
+         CardItem cardItem = userApiService.getCardById(cardCreateResponse.getId())
+                 .shouldHave(statusCode(200))
+                 .asPojo(CardItem.class);
      }
+
+
+    @Test
+    public void deleteCard() {
+        CardPayload card = new CardPayload()
+                .ccv("11/11")
+                .expires("2024")
+                .longNum("0000123")
+                .userID("NoMatterqwe");
+        CardCreateResponse cardCreateResponse = userApiService.createCard(card)
+                .shouldHave(statusCode(200))
+                .asPojo(CardCreateResponse.class);
+        userApiService.deleteCard(cardCreateResponse.getId())
+                .shouldHave(statusCode(200));
+    }
 
 }
 
