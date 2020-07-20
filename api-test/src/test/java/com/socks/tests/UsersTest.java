@@ -132,8 +132,8 @@ public class UsersTest {
     public void getCreatedCard() {
          CardPayload card = new CardPayload()
                  .ccv(faker.internet().domainWord())
-                 .expires(faker.date().toString())
-                 .longNum(faker.number().toString())
+                 .expires("20/2030")
+                 .longNum("0011")
                  .userID(faker.internet().uuid());
 
          CardCreateResponse cardCreateResponse = userApiService.createCard(card)
