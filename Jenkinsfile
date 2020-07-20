@@ -10,7 +10,7 @@ node {
     }
 
     stage("run api tests") {
-        sh "bash ./gradlew api-test:test -Dlogging=%LOGGING%"
+        sh "bash ./gradlew api-test:test -Dlogging=%LOGGING% -Denv=%ENV%"
     }
 
     allure([
