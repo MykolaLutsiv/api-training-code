@@ -9,7 +9,7 @@ node {
         sh "bash ./gradlew clean api-test:assemble"
     }
 
-    stage("run api tests ed") {
+    stage("run api tests1") {
         sh "bash ./gradlew api-test:test -Denv=%ENV%"
     }
 
