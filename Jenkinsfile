@@ -1,6 +1,6 @@
 node {
      stage("checkout repo") {
-        git branch: 'develop',
+        git branch: 'master',
         credentialsId: '53ea92ba-20a7-4a04-8ab0-2acb8e0b0991',
         url: 'https://github.com/MykolaLutsiv/api-training-code.git'
     }
@@ -10,7 +10,7 @@ node {
     }
 
     stage("run api tests") {
-        sh "bash ./gradlew api-test:test -Denv=%ENV%"
+        sh "bash ./gradlew api-test:test -Dlogging=%LOGGING%"
     }
 
     allure([
