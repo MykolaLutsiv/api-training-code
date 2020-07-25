@@ -31,7 +31,7 @@ public class UsersTest {
     @BeforeClass
     public void setUp() {
         ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
-        faker = new Faker(new Locale(config.locale()));
+        faker = new Faker(new Locale("ru"));
         RestAssured.baseURI = config.baseUrl();
         RestAssured.defaultParser = Parser.JSON;
     }
