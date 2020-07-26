@@ -5,6 +5,7 @@ import com.socks.api.ProjectConfig;
 
 import com.socks.api.payloads.CardPayload;
 import com.socks.api.payloads.UserPayload;
+import com.socks.api.responses.CardNotFoundResponse;
 import com.socks.api.responses.CardsResponse.CardItem;
 import com.socks.api.responses.CardsResponse.CardsResponse;
 import com.socks.api.responses.CardCreateResponse;
@@ -158,6 +159,9 @@ public class UsersTest {
                 .asPojo(CardCreateResponse.class);
         userApiService.deleteCard(cardCreateResponse.getId())
                 .shouldHave(statusCode(200));
+        userApiService.getCardById(cardCreateResponse.getId())
+                .shouldHave(statusCode(200))
+                .asPojo(CardNotFoundResponse.class);
     }
 
 }
