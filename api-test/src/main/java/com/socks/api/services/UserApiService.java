@@ -45,10 +45,29 @@ public class UserApiService extends ApiService {
     }
 
     @Step
+    public AssertableResponse login(String username, String password) {
+        return new AssertableResponse(setUp()
+                .auth()
+                .preemptive()
+                .basic(username, password)
+                .when()
+                .get("login"));
+    }
+
+    @Step
     public AssertableResponse customerById(String id) {
         return new AssertableResponse(setUp()
                 .when()
                 .get("customers/" + id));
+    }
+
+    @Step
+    public AssertableResponse addItemToCartById(String itemId) {
+        return new AssertableResponse(setUp()
+                .cookies(login())
+                .body("{id: " + itemId + "}")
+                .when()
+                .post("cart"));
     }
 
 

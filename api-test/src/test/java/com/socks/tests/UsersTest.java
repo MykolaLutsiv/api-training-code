@@ -51,6 +51,22 @@ public class UsersTest {
                 .shouldHave(bodyField("id", notNullValue()));
 
     }
+    @Test
+    public void testLoginWithValidCredentials() {
+        UserPayload user = new UserPayload()
+                .username(faker.name().username())
+                .email(faker.internet().emailAddress())
+                .password(faker.internet().password());
+
+        // expect
+        userApiService.registerUser(user)
+                .shouldHave(statusCode(200))
+                .shouldHave(bodyField("id", notNullValue()));
+
+        userApiService.login(user.username(), user.password())
+                .shouldHave(statusCode(200));
+
+    }
 
     @Test
     public void  testGetOrders() {

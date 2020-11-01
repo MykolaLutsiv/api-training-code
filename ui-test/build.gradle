@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    testNgVersion = '6.13'
+    selenideVersion = '5.14.2'
+}
+
+dependencies {
+    compile project(":api-test")
+    testCompile "org.testng:testng:$testNgVersion"
+    compile "com.codeborne:selenide:$selenideVersion"
+    compile group: 'io.qameta.allure', name: 'allure-rest-assured', version: '2.13.6'
+    compile group: 'io.qameta.allure', name: 'allure-selenide', version: '2.13.6'
+
+
+}
+test {
+    useTestNG()
+}
+
+allure {
+    version = '2.8.1'
+    aspectjweaver = 'true'
+    configuration = 'compile'
+    autoconfigure = true
+
+}
