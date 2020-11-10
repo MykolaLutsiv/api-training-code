@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.sleep;
 
 public class ShoppingCartPage {
 
@@ -15,6 +16,7 @@ public class ShoppingCartPage {
 
     @Step
     public static ShoppingCartPage open() {
+        sleep(300);
         Selenide.open("/basket.html");
         return Selenide.page(ShoppingCartPage.class);
     }
