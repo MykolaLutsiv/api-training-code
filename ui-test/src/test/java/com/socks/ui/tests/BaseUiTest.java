@@ -18,15 +18,13 @@ public abstract class BaseUiTest {
     ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
     public final Faker faker = new Faker(new Locale(config.locale()));
 
-    static {
-//        Configuration.browser = WebDriverRunner.CHROME;
-    }
 
     @BeforeSuite
     public void setUp() {
 
         RestAssured.baseURI = config.baseUrl();
         Configuration.baseUrl = config.baseUrl();
+        Configuration.browser = "com.socks.ui.SelenoidDriverProvider";
 //        Configuration.pollingInterval = 800;
 
     }
