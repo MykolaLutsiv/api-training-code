@@ -27,7 +27,7 @@ public abstract class BaseUiTest {
 
         RestAssured.baseURI = config.baseUrl();
         Configuration.baseUrl = config.baseUrl();
-        Configuration.pollingInterval = 800;
+//        Configuration.pollingInterval = 800;
 
     }
 

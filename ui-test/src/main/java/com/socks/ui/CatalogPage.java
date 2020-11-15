@@ -10,6 +10,7 @@ public class CatalogPage {
     @Step
     public static CatalogPage open() {
         Selenide.open("/category.html");
+        sleep(300);
         return Selenide.page(CatalogPage.class);
     }
 
