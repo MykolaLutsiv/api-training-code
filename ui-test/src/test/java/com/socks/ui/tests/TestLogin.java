@@ -19,13 +19,12 @@ import static com.socks.api.conditions.Conditions.statusCode;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
 public class TestLogin extends BaseUiTest{
-    private final UserApiService userApiService = new UserApiService();
 
 
+    @Test(dataProvider = "loginData")
+    public void userCanLoginWithValidCredentials(String login, String password) {
 
-    @Test
-    public void userCanLoginWithValidCredentials() {
-
+        System.out.println(login + password);
         UserPayload user = new UserPayload()
                 .username(faker.name().username())
                 .email(faker.internet().emailAddress())

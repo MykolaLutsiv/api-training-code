@@ -4,9 +4,15 @@
                 url "https://plugins.gradle.org/m2/"
             }
         }
+        ext {
+            lombokVer = "1.18.22"
+        }
         dependencies {
             classpath "io.franzbecker:gradle-lombok:3.2.0"
             classpath "io.qameta.allure:allure-gradle:2.8.1"
+
+//            implementation "org.projectlombok:lombok:$lombokVer"
+            classpath "org.projectlombok:lombok:$lombokVer"
         }
     }
 

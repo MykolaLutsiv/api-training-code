@@ -34,11 +34,11 @@ public class UserApiService extends ApiService {
     }
 
     @Step
-    public Map<String, String> login() {
+    private Map<String, String> login() {
         return setUp()
                 .auth()
                 .preemptive()
-                .basic("mykola", "12345")
+                .basic("billy.williamson", "m0tfs7b09n5")
                 .when()
                 .get("login")
                 .getCookies();
@@ -94,7 +94,7 @@ public class UserApiService extends ApiService {
 
     @Step
     public AssertableResponse createCard(CardPayload card) {
-        return new AssertableResponse((Response) setUp()
+        return new AssertableResponse(setUp()
                 .cookies(login())
                 .body(card)
                 .when()

@@ -1,8 +1,5 @@
 package com.socks.tests;
 
-import com.github.javafaker.Faker;
-import com.socks.api.ProjectConfig;
-
 import com.socks.api.payloads.CardPayload;
 import com.socks.api.payloads.UserPayload;
 import com.socks.api.responses.CardNotFoundResponse;
@@ -10,32 +7,14 @@ import com.socks.api.responses.CardsResponse.CardItem;
 import com.socks.api.responses.CardsResponse.CardsResponse;
 import com.socks.api.responses.CardCreateResponse;
 import com.socks.api.responses.UserRegistrationResponse;
-import com.socks.api.services.UserApiService;
-import io.restassured.RestAssured;
-import io.restassured.parsing.Parser;
-import org.aeonbits.owner.ConfigFactory;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.util.Locale;
 
 import static com.socks.api.conditions.Conditions.bodyField;
 import static com.socks.api.conditions.Conditions.statusCode;
 import static org.hamcrest.Matchers.*;
 
-public class UsersTest {
-
-    private final UserApiService userApiService = new UserApiService();
-    private Faker faker;
-
-    @BeforeClass
-    public void setUp() {
-        ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
-        faker = new Faker(new Locale(config.locale()));
-        RestAssured.baseURI = config.baseUrl();
-        RestAssured.defaultParser = Parser.JSON;
-    }
+public class UsersTest extends BaseTest {
 
     @Test
     public void  testCanRegisterNewUser() {
@@ -48,9 +27,10 @@ public class UsersTest {
         // expect
         userApiService.registerUser(user)
                 .shouldHave(statusCode(200))
-                .shouldHave(bodyField("id", notNullValue()));
-
+                .shouldHave(bodyField("id", notNullValue()))
+                .asPojo(UserRegistrationResponse.class);
     }
+
     @Test
     public void testLoginWithValidCredentials() {
         UserPayload user = new UserPayload()
@@ -91,22 +71,6 @@ public class UsersTest {
                 .shouldHave(statusCode(200));
     }
 
-    // SAME TEST AS ABOVE BUT WITH POJO CLASS
-    @Test
-    public void testCanRegisterNewUser2() {
-        // given
-        UserPayload user = new UserPayload()
-                .username(faker.name().username())
-                .email(faker.internet().emailAddress())
-                .password(faker.internet().password());
-
-        // expect
-        UserRegistrationResponse response = userApiService.registerUser(user)
-                .shouldHave(statusCode(200))
-                .asPojo(UserRegistrationResponse.class);
-        Assert.assertNotNull(response.getId());
-    }
-
     @Test
     public void testCanNotRegisterSameUser() {
 
@@ -138,8 +102,11 @@ public class UsersTest {
                 .ccv("11/11")
                 .expires("2024")
                 .longNum("0000123")
-                .userID("NoMatterqwe");
-        CardCreateResponse cardCreateResponse = userApiService.createCard(card)
+                .userID("NoMatter");
+
+
+        CardCreateResponse cardCreateResponse = userApiService
+                .createCard(card)
                 .shouldHave(statusCode(200))
                 .asPojo(CardCreateResponse.class);
         Assert.assertNotNull(cardCreateResponse.getId());

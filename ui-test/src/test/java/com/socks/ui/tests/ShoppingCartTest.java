@@ -10,8 +10,10 @@ import com.socks.api.services.UserApiService;
 import com.socks.ui.CatalogPage;
 import com.socks.ui.ShoppingCartPage;
 import org.openqa.selenium.Cookie;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.Assertion;
 
 import java.util.Map;
 import java.util.Set;
@@ -19,8 +21,6 @@ import java.util.Set;
 import static com.codeborne.selenide.Selenide.sleep;
 
 public class ShoppingCartTest extends BaseUiTest{
-    private final UserApiService userApiService = new UserApiService();
-    private final CartApiService cartApiService = new CartApiService();
 
     @AfterMethod
     public void tearDown() {
@@ -41,6 +41,9 @@ public class ShoppingCartTest extends BaseUiTest{
     public void testUserCanDeleteItemFromCart() {
         CatalogPage.open()
                 .addItemByIndex(0);
+
+        String itemsInCartText = new CatalogPage().getItemsInCartText();
+        Assert.assertEquals(itemsInCartText, String.format("%s item(s) in cart", 1));
 
         ShoppingCartPage.open()
                 .deleteItem()
