@@ -10,4 +10,49 @@ subprojects {
     repositories {
         mavenCentral()
     }
+
+    ext {
+        restAssuredVer = "4.4.0"
+        testngVer = "7.4.0"
+        allureVer = '2.16.1'
+        lombokVer = "1.18.22"
+        jacksonVer = "2.13.0"
+        logbackVer = '1.2.7'
+        javafakerVer = '1.0.2'
+        ownerVer = "1.0.12"
+        awaitilityVer = '4.1.1'
+        aspectjweaverVer = "1.9.7"
+
+    }
+
+    allure {
+        version = allureVer
+        useTestNG {
+            version = allureVer
+        }
+    }
+
+    dependencies {
+        implementation "org.testng:testng:$testngVer"
+        implementation group: 'io.rest-assured', name: 'rest-assured', version: restAssuredVer
+
+        implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+        implementation "org.projectlombok:lombok:$lombokVer"
+        annotationProcessor "org.projectlombok:lombok:$lombokVer"
+
+        implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVer"
+        implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVer"
+        implementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVer"
+
+        testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: logbackVer
+        implementation group: 'ch.qos.logback', name: 'logback-core', version: logbackVer
+
+        implementation group: 'com.github.javafaker', name: 'javafaker', version: javafakerVer
+
+        implementation "org.awaitility:awaitility:$awaitilityVer"
+        implementation "org.aeonbits.owner:owner:$ownerVer"
+        implementation "io.qameta.allure:allure-rest-assured:$allureVer"
+        implementation 'com.codepine.api:testrail-api-java-client:2.0.2'  // test rail integration
+    }
 }

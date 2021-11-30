@@ -1,39 +1,24 @@
-    plugins {
-//        id 'java'
-//        id 'api-test.build.gradle'
-    }
+repositories {
+    mavenCentral()
+}
 
-    repositories {
-        mavenCentral()
-    }
+ext {
+    selenideVersion = '6.0.3'
+}
 
-    ext {
-        testNgVersion = '7.4.0'
-        selenideVersion = '6.0.3'
-        allureVer = '2.16.1'
-    }
 
-    allure {
-        version = allureVer
-        useTestNG {
-            version = allureVer
-        }
-    }
+dependencies {
+    implementation project(":api-test")
+    implementation "com.codeborne:selenide:$selenideVersion"
+    implementation group: 'io.qameta.allure', name: 'allure-selenide', version: allureVer
 
-    dependencies {
-        implementation project(":api-test")
-        testImplementation "org.testng:testng:$testNgVersion"
-        implementation "com.codeborne:selenide:$selenideVersion"
-        implementation group: 'io.qameta.allure', name: 'allure-rest-assured', version: allureVer
-        implementation group: 'io.qameta.allure', name: 'allure-selenide', version: allureVer
-
+}
+test {
+    useTestNG() {
+        parallel = "methods"
+        threadCount = 1
     }
-    test {
-        useTestNG() {
-            parallel="methods"
-            threadCount=2
-        }
-    }
+}
 
 //    tasks.withType(Test) {
 //        useTestNG()
