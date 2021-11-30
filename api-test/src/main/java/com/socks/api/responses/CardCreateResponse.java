@@ -5,12 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.annotation.Generated;
-
 @Getter
 @Setter
 @ToString
-@Generated("com.robohorse.robopojogenerator")
 public class CardCreateResponse {
 
     @JsonProperty("id")

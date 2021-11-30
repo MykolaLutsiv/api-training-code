@@ -5,14 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.annotation.Generated;
-
 @Getter
 @Setter
 @ToString
-@Generated("com.robohorse.robopojogenerator")
-public class UserRegistrationResponse{
+public class UserRegistrationResponse {
 
-	@JsonProperty("id")
-	private String id;
+    @JsonProperty("id")
+    private String id;
 }

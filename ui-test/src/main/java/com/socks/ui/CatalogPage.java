@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class CatalogPage extends BasePage {
+public class CatalogPage {
 
     @Step
     public static CatalogPage open() {

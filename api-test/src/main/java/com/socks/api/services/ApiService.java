@@ -3,11 +3,11 @@ package com.socks.api.services;
 import com.socks.api.ProjectConfig;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.Filter;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
+import io.restassured.http.Cookies;
 import io.restassured.specification.RequestSpecification;
 import org.aeonbits.owner.ConfigFactory;
 
@@ -21,6 +21,14 @@ public class ApiService {
     protected RequestSpecification setUp() {
         return RestAssured
                 .given()
+                .contentType(ContentType.JSON)
+                .filters(getFilters());
+    }
+
+    protected RequestSpecification setUp(Cookies cookies) {
+        return RestAssured
+                .given()
+                .cookies(cookies)
                 .contentType(ContentType.JSON)
                 .filters(getFilters());
     }

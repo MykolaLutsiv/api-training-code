@@ -2,23 +2,14 @@ package com.socks.ui.tests;
 
 
 import com.codeborne.selenide.Condition;
-import com.github.javafaker.Faker;
-import com.socks.api.conditions.Conditions;
 import com.socks.api.payloads.UserPayload;
-import com.socks.api.services.UserApiService;
 import com.socks.ui.LoggedUserPage;
 import com.socks.ui.MainPage;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.Test;
 
-import java.util.Locale;
-import java.util.Random;
-
-import static com.codeborne.selenide.Selenide.*;
 import static com.socks.api.conditions.Conditions.statusCode;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
-public class TestLogin extends BaseUiTest{
+public class TestLogin extends BaseUiTest {
 
 
     @Test(dataProvider = "loginData")

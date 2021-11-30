@@ -1,5 +1,6 @@
     plugins {
-        id 'java'
+//        id 'java'
+//        id 'api-test.build.gradle'
     }
 
     repositories {
@@ -9,13 +10,22 @@
     ext {
         testNgVersion = '7.4.0'
         selenideVersion = '6.0.3'
+        allureVer = '2.16.1'
+    }
+
+    allure {
+        version = allureVer
+        useTestNG {
+            version = allureVer
+        }
     }
 
     dependencies {
         implementation project(":api-test")
-        implementation "org.testng:testng:$testNgVersion"
+        testImplementation "org.testng:testng:$testNgVersion"
         implementation "com.codeborne:selenide:$selenideVersion"
-
+        implementation group: 'io.qameta.allure', name: 'allure-rest-assured', version: allureVer
+        implementation group: 'io.qameta.allure', name: 'allure-selenide', version: allureVer
 
     }
     test {
@@ -25,23 +35,12 @@
         }
     }
 
-    tasks.withType(Test) {
-        useTestNG()
-    }
-
-    tasks.register("uitests", Test).configure( {
-        filter {
-            includeTestsMatching("com.socks.ui.tests.TestLogin")
-        }
-    })
-
-    allure {
-        version = '2.8.1'
-        aspectjweaver = 'true'
-        configuration = 'compile'
-        autoconfigure = true
-        useTestNG {
-            version = '2.13.6'
-        }
-
-    }
+//    tasks.withType(Test) {
+//        useTestNG()
+//    }
+//
+//    tasks.register("uitests", Test).configure( {
+//        filter {
+//            includeTestsMatching("com.socks.ui.tests.TestLogin")
+//        }
+//    })

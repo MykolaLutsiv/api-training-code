@@ -6,25 +6,22 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import javax.annotation.Generated;
-
 
 @Getter
 @Setter
 @ToString
 @Accessors(fluent = true)
-@Generated("com.robohorse.robopojogenerator")
-public class CardPayload{
+public class CardPayload {
 
-	@JsonProperty("expires")
-	private String expires;
+    @JsonProperty("expires")
+    private String expires;
 
-	@JsonProperty("longNum")
-	private String longNum;
+    @JsonProperty("longNum")
+    private String longNum;
 
-	@JsonProperty("ccv")
-	private String ccv;
+    @JsonProperty("ccv")
+    private String ccv;
 
-	@JsonProperty("userID")
-	private String userID;
+    @JsonProperty("userID")
+    private String userID;
 }

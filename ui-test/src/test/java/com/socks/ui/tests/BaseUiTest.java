@@ -37,7 +37,7 @@ public abstract class BaseUiTest {
 
 
     @DataProvider(name = "loginData")
-    public Object[] dds() {
+    public Object[][] dds() {
         return new String[][] { {"1", "2"}, {"2", "pass"}};
     }
 

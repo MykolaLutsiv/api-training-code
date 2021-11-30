@@ -3,18 +3,10 @@ package com.socks.api.services;
 import com.socks.api.assertions.AssertableResponse;
 import com.socks.api.payloads.CardPayload;
 import com.socks.api.payloads.UserPayload;
-import com.socks.api.responses.CardCreateResponse;
-import com.socks.api.responses.UserRegistrationResponse;
 import io.qameta.allure.Step;
-import io.restassured.authentication.FormAuthConfig;
-import io.restassured.config.LogConfig;
-import io.restassured.filter.session.SessionFilter;
-import io.restassured.http.Cookie;
-import io.restassured.response.Response;
+import io.restassured.http.Cookies;
 
 import java.util.Map;
-
-import static io.restassured.RestAssured.given;
 
 public class UserApiService extends ApiService {
 
@@ -38,10 +30,21 @@ public class UserApiService extends ApiService {
         return setUp()
                 .auth()
                 .preemptive()
-                .basic("billy.williamson", "m0tfs7b09n5")
+                .basic("tawana.ruecker", "9fk1dsifcq")
                 .when()
                 .get("login")
                 .getCookies();
+    }
+
+    @Step
+    private Cookies getDetailedCookies() {
+        return setUp()
+                .auth()
+                .preemptive()
+                .basic("tawana.ruecker", "9fk1dsifcq")
+                .when()
+                .get("login")
+                .getDetailedCookies();
     }
 
     @Step
@@ -94,8 +97,7 @@ public class UserApiService extends ApiService {
 
     @Step
     public AssertableResponse createCard(CardPayload card) {
-        return new AssertableResponse(setUp()
-                .cookies(login())
+        return new AssertableResponse(setUp(getDetailedCookies())
                 .body(card)
                 .when()
                 .post("cards"));
